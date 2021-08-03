@@ -713,7 +713,7 @@ function mostra_inicio(msg_user=''){
 
 function chamadaAjax(artigo, codigo){
 $.ajax({
-      url: 'http://127.0.0.1:8000/isa/'+artigo+'/'+codigo,
+      url: 'https://isa-adr.herokuapp.com/'+artigo+'/'+codigo,
       data: {
          format: 'json'
       },
