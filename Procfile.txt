@@ -1,1 +1,1 @@
-web: gunicorn ISA.wsgi --log-file -
+web: gunicorn isa.wsgi --log-file -
