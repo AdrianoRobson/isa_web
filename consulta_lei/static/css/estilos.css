@@ -1,0 +1,38 @@
+body{
+    background-color: white;
+    color: black;
+    /*padding: 0 1em;*/
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+p{
+    font-size:15px;
+}
+
+p.double{
+    border-style: double;
+    text-align:center;
+}
+
+div.container4 {
+    margin: 0 auto; }
+
+/*div.container4 p {
+    margin: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) }*/
+
+
+
+
+ .center {
+border: 5px solid #FFFF00;
+text-align: center;
+}
