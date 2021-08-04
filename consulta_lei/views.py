@@ -11,15 +11,6 @@ from django.core import serializers
 
 def index(request):
 
-    """db_path = path.join('C:\\Users\\adriano\\Desktop\\', 'artigo5.txt')
-
-    with open(db_path, encoding='UTF-8') as file:
-
-        context = {
-            'artigo': file.readlines()
-        }
-
-    return render(request, 'index.html', context)"""
     return render(request, 'index.html')
 
 

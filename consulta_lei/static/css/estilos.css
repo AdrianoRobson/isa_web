@@ -14,7 +14,7 @@ p{
 }
 
 p.double{
-    border-style: double;
+    /*border-style: double;*/
     text-align:center;
 }
 
