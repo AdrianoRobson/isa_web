@@ -1,3 +1,4 @@
+
 var timer;
 var timer2;
 var conta_muda_index = 0;
@@ -18,6 +19,7 @@ var control = 0;
 var action = document.getElementById("action");
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 var recognition;
+var transcript = '';
 
 var dictOrdinais = {
     1: 'primeiro',
@@ -203,73 +205,64 @@ function scroll_down_up(id) {
 
 
 
+document.addEventListener("keydown", function(event) {
+    if (event.defaultPrevented) {
+        return; // Do nothing if the event was already processed
+    }
 
-window.addEventListener("keydown", function (event) {
-  if (event.defaultPrevented) {
-    return; // Do nothing if the event was already processed
-  }
+    if (event.keyCode == 32 && event.target == document.body) {
+        event.preventDefault();
 
-  switch (event.key) {
-    case "Down": // IE/Edge specific value
-    case "ArrowDown":
-    executaLinhaTexto()
-      // Do something for "down arrow" key press.
-      break;
-    case "Up": // IE/Edge specific value
-    case "ArrowUp":
-     executaLinhaTextoBack()
-      // Do something for "up arrow" key press.
-      break;
-    case "Left": // IE/Edge specific value
-    case "ArrowLeft":
-      // Do something for "left arrow" key press.
-      break;
-    case "Right": // IE/Edge specific value
-    case "ArrowRight":
-      // Do something for "right arrow" key press.
-      break;
-    case "Enter":
+        iniciaTimer(2);
+
         if (index == -1) {
 
+        } else if (vet.length > 0) {
 
-            } else if (vet.length > 0) {
+            pausa();
 
-                pausa();
-
-            }
-      // Do something for "enter" or "return" key press.
-      break;
-    case "Esc": // IE/Edge specific value
-    case "Escape":
-      // Do something for "esc" key press.
-      break;
-    case "Backspace":
-    alert("back");
-    break;
-    default:
-      return; // Quit when this doesn't handle the key event.
-  }
-
-  // Cancel the default action to avoid it being handled twice
-  event.preventDefault();
-}, true);
-
-
-
-
-/*
-window.addEventListener("keypress", checkKeyPressed, false);
-
-function checkKeyPressed(e) {
-
-    e.preventDefault();
-
-    if (e.charCode === 38) {
-        executaLinhaTextoBack()
-    } else if (e.charCode === 40) {
-        executaLinhaTexto()
+        }
     }
-}*/
+
+    switch (event.key) {
+        case "Down": // IE/Edge specific value
+        case "ArrowDown":
+            iniciaTimer(2);
+            executaLinhaTexto()
+            // Do something for "down arrow" key press.
+            break;
+        case "Up": // IE/Edge specific value
+        case "ArrowUp":
+            iniciaTimer(2);
+            executaLinhaTextoBack()
+            // Do something for "up arrow" key press.
+            break;
+        case "Left": // IE/Edge specific value
+        case "ArrowLeft":
+            // Do something for "left arrow" key press.
+            break;
+        case "Right": // IE/Edge specific value
+        case "ArrowRight":
+            // Do something for "right arrow" key press.
+            break;
+        case "Enter":
+
+            // Do something for "enter" or "return" key press.
+            break;
+        case "Esc": // IE/Edge specific value
+        case "Escape":
+
+        //iniciaTimer(3);
+        longPress();
+
+            break;
+        default:
+            return; // Quit when this doesn't handle the key event.
+    }
+
+    // Cancel the default action to avoid it being handled twice
+    event.preventDefault();
+}, true);
 
 
 function touchStartHandler(event) {
@@ -309,27 +302,27 @@ function touchStartHandler(event) {
 }
 
 
-function pausa(){
+function pausa() {
     ctl = controla_pause_resume();
 
-                if (ctl == 1) {
+    if (ctl == 1) {
 
-                    if (synth.speaking) {
+        if (synth.speaking) {
 
-                        synth.cancel()
+            synth.cancel()
 
-                        cancelaTimer(2);
-                    }
-                } else {
+            cancelaTimer(2);
+        }
+    } else {
 
-                    if (synth.speaking == false) {
+        if (synth.speaking == false) {
 
-                        speech();
+            speech();
 
-                        iniciaTimer(2);
+            iniciaTimer(2);
 
-                    }
-                }
+        }
+    }
 }
 
 
@@ -405,6 +398,8 @@ function speech() {
 /* JS comes here */
 function runSpeechRecognition() {
 
+    transcript = '';
+
     if (typeof recognition !== 'undefined') {
         recognition.abort();
         recognition = null;
@@ -416,6 +411,7 @@ function runSpeechRecognition() {
 
     // This runs when the speech recognition service starts
     recognition.onstart = function() {
+
         action.innerText = "Ouvindo... \n" +
             "* Diga o numero do artigo seguido do código *\n\n" +
             "Ex: \n" +
@@ -429,11 +425,20 @@ function runSpeechRecognition() {
     recognition.onspeechend = function() {
 
         recognition.stop();
+
+    }
+
+    recognition.onend = function() {
+
+        if(transcript.trim().length == 0){
+            mostra_inicio();
+        }
+
     }
 
     // This runs when the speech recognition service returns result
     recognition.onresult = function(event) {
-        var transcript = event.results[0][0].transcript;
+        transcript = event.results[0][0].transcript;
         var confidence = event.results[0][0].confidence;
         //action.innerText = "Text: " + transcript + "\nConfidence: " + confidence*100+"%";
 
@@ -460,14 +465,23 @@ function runSpeechRecognition() {
 
 // ********************* SPEECH RECOGNATION END ****************************
 
+function isMobile() {
+    if (navigator.userAgent.indexOf("Mobile") > 0) {
+        return true;
+    }
+    return false;
+}
+
+
+
 
 function longPress() {
 
+     transcript='';
+
     esconde_tabela();
     cancelaTimer(2);
-
     runSpeechRecognition();
-
     synth.cancel();
     control = 0;
 }
@@ -509,7 +523,7 @@ function iniciaTimer(t) {
     }
     /*else if (t == 3){
        if (!timer3) {
-           timer3 = setInterval(function(){tempo_muda_index()},0);
+           timer3 = setInterval(function(){falou_algo()},0);
        }
     }*/
 }
@@ -636,7 +650,6 @@ window.onload = function() {
     count = 0;
     control = 0;
     auxIndex = 0;
-    iniciaTimer(3);
 
     mostra_falando();
 
@@ -647,24 +660,31 @@ window.onload = function() {
 
 function mostra_inicio(msg_user = '') {
 
-    action.innerText = msg_user + '\n* Mantenha um dedo na tela *\n\n' + 'Códigos disponíveis: \n' + retorna_codigos() +
-    "\nConsultar artigo - Mantenha o dedo na tela durante 1 segundo\n"+
-    "Reproduzir artigo - 2 dedos simultâneos na tela \n"+
-    "Pausar reprodução - 1 toque simples na tela\n"+
-    "Continuar reprodução - 1 toque simples na tela\n"+
-    "Avançar artigo - 2 dedos simultâneos na tela\n"+
-    "Retroceder artigo - arrastar 2 dedos simultâneos no centro da tela\n";
+    if (isMobile()){
+        action.innerText = msg_user + '\n* Mantenha um dedo na tela *\n\n' + 'Códigos disponíveis: \n' + retorna_codigos() +
+        "\nConsultar artigo - Mantenha o dedo na tela durante 1 segundo\n" +
+        "Reproduzir artigo - 2 dedos simultâneos na tela \n" +
+        "Pausar reprodução - 1 toque simples na tela\n" +
+        "Continuar reprodução - 1 toque simples na tela\n" +
+        "Avançar artigo - 2 dedos simultâneos na tela\n" +
+        "Retroceder artigo - arrastar 2 dedos simultâneos no centro da tela\n";
+    }
+    else{
+
+        action.innerText = msg_user + '\n* Precione a tecla Esc *\n\n' + 'Códigos disponíveis: \n' + retorna_codigos() +
+        "\nConsultar artigo - Precione a tecla Esc do teclado\n" +
+        "Reproduzir artigo - Clicar na seta para baixo do teclado \n" +
+        "Pausar reprodução - Clicar na barra de espaço do teclado\n" +
+        "Continuar reprodução - Clicar na barra de espaço do teclado\n" +
+        "Avançar artigo - Clicar na seta para baixo do teclado\n" +
+        "Retroceder artigo - Clicar na seta para cima do teclado\n";
+
+    }
+
 
 }
 
 
- function isMobile(){
-      if(navigator.userAgent.indexOf("Mobile") > 0){
-        return true;
-      }else{
-        return false;
-      }
-   }
 
 function chamadaAjax(artigo, codigo) {
 
