@@ -742,9 +742,14 @@ function chamadaAjax(artigo, codigo) {
     vet2 = []
     vet = []
 
+    $("#ouvindo_table").hide()
+
+    $("#info").show()
+    $("#info").append('<strong>Aguarde...</strong>')
+
     $.ajax({
-       url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
-       // url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
+      url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
+      //   url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
         data: {
             format: 'json'
         },
@@ -758,14 +763,6 @@ function chamadaAjax(artigo, codigo) {
         success: function(data) {
 
             if (data.length > 0) {
-
-                $("#ouvindo_table").hide()
-
-                $("#info").show()
-                $("#info").append('<strong>Aguarde...</strong>')
-
-
-
 
                 vet_artInaterado = data[0].fields.artigoInalterado.split(/\n/);
                 vet_artigoTexto = data[0].fields.artigoTexto.split(/\n/);
@@ -825,6 +822,9 @@ function chamadaAjax(artigo, codigo) {
                 $('#ouvindo_table').hide();
                 $("#manual_table").hide();
 
+                $("#info").empty()
+                $("#info").hide()
+
 
                 for (var i = 0, row; row = table.rows[i]; i++) {
 
@@ -840,8 +840,6 @@ function chamadaAjax(artigo, codigo) {
 
                 speech2(str_falar_artigo);
 
-                $("#info").empty()
-                $("#info").hide()
 
             } else {
 
