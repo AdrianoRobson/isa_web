@@ -718,11 +718,16 @@ function mostra_inicio(msg_user = '') {
 
 
 
+
+
 function chamadaAjax(artigo, codigo) {
 
+    vet2 = []
+    vet = []
+
     $.ajax({
-         url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
-       //url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
+       url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
+         //url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
         data: {
             format: 'json'
         },
@@ -815,6 +820,7 @@ function chamadaAjax(artigo, codigo) {
                 mostra_inicio("Não existe o artigo " + artigo + ' em ' + dictCodigo[codigo] + '\n')
 
                 speech2('Não existe o artigo ' + artigo + ' em ' + dictCodigo[codigo])
+
             }
 
 
