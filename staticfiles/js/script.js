@@ -131,6 +131,10 @@ function controla_pause_resume() {
 
 function executaLinhaTexto() {
 
+    if ($("#art").is(":hidden")){
+        return;
+    }
+
     index++;
 
     conta_muda_index = 0;
@@ -160,6 +164,10 @@ function executaLinhaTexto() {
 
 
 function executaLinhaTextoBack() {
+
+    if ($("#art").is(":hidden")){
+        return;
+    }
 
     index--;
 
@@ -576,10 +584,6 @@ function speech2(msg) {
 
 function autoExecutaLinha() {
 
-    if ($("#art").is(":hidden")){
-        return;
-    }
-
     if (vet.length == 0)
         return;
 
@@ -618,7 +622,8 @@ function autoExecutaLinha() {
 
 
 document.addEventListener('visibilitychange', function() {
-    if (document.hidden) {
+
+    if (document.hidden ) {
         //speech2('Página não está visível');
         synth.cancel();
         cancelaTimer(2)
@@ -716,8 +721,8 @@ function mostra_inicio(msg_user = '') {
 function chamadaAjax(artigo, codigo) {
 
     $.ajax({
-        url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
-        //url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
+         url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
+       //url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
         data: {
             format: 'json'
         },
