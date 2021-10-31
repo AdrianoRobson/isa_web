@@ -88,7 +88,9 @@ function esconde_tabela() {
     if (vet.length == 0)
         return;
 
-    table.style.display = "none";
+    $("table").hide();
+    //table.style.display = "none";
+
     art.style.display = 'none';
     mostra_falando();
 }
@@ -101,7 +103,10 @@ function mostra_falando() {
 
 function mostra_tabela() {
 
-    table.style.display = "block";
+    $("table").show();
+
+    //table.style.display = "block";
+
     art.style.display = 'block';
 }
 
@@ -204,11 +209,15 @@ function scroll_down_up(id) {
 }
 
 
-
 document.addEventListener("keydown", function(event) {
     if (event.defaultPrevented) {
         return; // Do nothing if the event was already processed
     }
+
+    if((event.key!='Escape' && event.key!='Esc') && $('#table').is(":hidden")){
+        return;
+    }
+
 
     if (event.keyCode == 32 && event.target == document.body) {
         event.preventDefault();
@@ -225,6 +234,7 @@ document.addEventListener("keydown", function(event) {
     }
 
     switch (event.key) {
+
         case "Down": // IE/Edge specific value
         case "ArrowDown":
             iniciaTimer(2);
@@ -251,6 +261,8 @@ document.addEventListener("keydown", function(event) {
             break;
         case "Esc": // IE/Edge specific value
         case "Escape":
+
+        limpa_cor_amarela()
 
         //iniciaTimer(3);
         longPress();
@@ -398,6 +410,8 @@ function speech() {
 /* JS comes here */
 function runSpeechRecognition() {
 
+
+
     transcript = '';
 
     if (typeof recognition !== 'undefined') {
@@ -412,14 +426,8 @@ function runSpeechRecognition() {
     // This runs when the speech recognition service starts
     recognition.onstart = function() {
 
-        action.innerText = "Ouvindo... \n" +
-            "* Diga o numero do artigo seguido do código *\n\n" +
-            "Ex: \n" +
-            "121 penal\n" +
-            "1025 civil\n" +
-            "125 consolidação\n" +
-            "18 processo penal\n" +
-            "quinto constituição";
+            cria_tabela()
+
     };
 
     recognition.onspeechend = function() {
@@ -451,8 +459,7 @@ function runSpeechRecognition() {
 
         } else {
 
-            mostra_inicio("Eu entendi: * " + transcript + " *\nNão foi possível encontrar!\n")
-
+            mostra_inicio("Eu entendi: '" + transcript + "', Não foi possível encontrar!")
             speech2(transcript + ', não foi possível encontrar!');
 
         }
@@ -476,6 +483,8 @@ function isMobile() {
 
 
 function longPress() {
+
+    $("#manual_table").hide();
 
      transcript='';
 
@@ -625,19 +634,6 @@ document.addEventListener('visibilitychange', function() {
 });
 
 
-function retorna_codigos() {
-
-    var codigos = '';
-
-    for (var key in dictCodigo) {
-        var cod = dictCodigo[key];
-        codigos += ' - ' + cod + '\n'
-    }
-
-    return codigos;
-
-}
-
 
 // call function with parameter
 window.onload = function() {
@@ -653,33 +649,60 @@ window.onload = function() {
 
     mostra_falando();
 
-    mostra_inicio();
 
+    mostra_codigo()
 };
+
+
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
+function mostra_codigo(){
+
+    codigos = ''
+    let count = 0
+
+    for (var key in dictCodigo) {
+         var cod = dictCodigo[key];
+         var cod = dictCodigo[key];
+
+        $( "#codigos" ).append('<p id='+count+'>'+capitalize(cod)+'</p>');
+
+        if (count % 2){
+            $("#"+count).css("background-color", "#f2f2f2");
+        }
+
+
+        count += 1
+    }
+
+}
+
+function cria_tabela(){
+
+    $("#info").empty()
+    $("#info").hide()
+
+    $("#ouvindo_table").show();
+    $("#manual_table").hide()
+
+}
+
 
 
 function mostra_inicio(msg_user = '') {
 
-    if (isMobile()){
-        action.innerText = msg_user + '\n* Mantenha um dedo na tela *\n\n' + 'Códigos disponíveis: \n' + retorna_codigos() +
-        "\nConsultar artigo - Mantenha o dedo na tela durante 1 segundo\n" +
-        "Reproduzir artigo - 2 dedos simultâneos na tela \n" +
-        "Pausar reprodução - 1 toque simples na tela\n" +
-        "Continuar reprodução - 1 toque simples na tela\n" +
-        "Avançar artigo - 2 dedos simultâneos na tela\n" +
-        "Retroceder artigo - arrastar 2 dedos simultâneos no centro da tela\n";
-    }
-    else{
+    //window.location.reload();
 
-        action.innerText = msg_user + '\n* Precione a tecla Esc *\n\n' + 'Códigos disponíveis: \n' + retorna_codigos() +
-        "\nConsultar artigo - Precione a tecla Esc do teclado\n" +
-        "Reproduzir artigo - Clicar na seta para baixo do teclado \n" +
-        "Pausar reprodução - Clicar na barra de espaço do teclado\n" +
-        "Continuar reprodução - Clicar na barra de espaço do teclado\n" +
-        "Avançar artigo - Clicar na seta para baixo do teclado\n" +
-        "Retroceder artigo - Clicar na seta para cima do teclado\n";
+     $("table").hide();
+     $("#manual_table").show();
 
-    }
+     if (msg_user != ''){
+        $("#info").show()
+        $("#info").append(msg_user)
+     }
 
 
 }
@@ -689,13 +712,16 @@ function mostra_inicio(msg_user = '') {
 function chamadaAjax(artigo, codigo) {
 
     $.ajax({
-        url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
-        //url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
+        //url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
+        url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
         data: {
             format: 'json'
         },
         error: function(jqxhr, settings, thrownError) {
             console.log('Houve um erro! ' + thrownError);
+
+            mostra_inicio(transcript + ', não foi possível encontrar!')
+
         },
         dataType: 'json',
         success: function(data) {
@@ -727,10 +753,16 @@ function chamadaAjax(artigo, codigo) {
                 }
 
 
+
+                //$('#ouvindo_table').hide();
+                //$("#manual_table").hide();
+
                 mostra_tabela();
                 esconde_falando();
 
                 $("#table tr").remove();
+                $("h1").remove();
+
 
                 synth.cancel();
                 cancelaTimer(2);
@@ -751,6 +783,9 @@ function chamadaAjax(artigo, codigo) {
                     vet2.push(vet_artigoTexto[i])
                 }
 
+                $('#ouvindo_table').hide();
+                $("#manual_table").hide();
+
 
                 for (var i = 0, row; row = table.rows[i]; i++) {
 
@@ -762,13 +797,14 @@ function chamadaAjax(artigo, codigo) {
                 iniciaTimer(2);
 
 
-                art.innerText = str_falar_artigo;
+                art.innerText = capitalize(str_falar_artigo);
 
                 speech2(str_falar_artigo);
 
             } else {
 
                 mostra_inicio("Não existe o artigo " + artigo + ' em ' + dictCodigo[codigo] + '\n')
+
                 speech2('Não existe o artigo ' + artigo + ' em ' + dictCodigo[codigo])
             }
 

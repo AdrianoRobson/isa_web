@@ -5,11 +5,13 @@ from django.shortcuts import render
 from os import path
 from .models import Artigo, Codigo
 from django.http import HttpResponse
-
+from user_agents import parse
 from django.core import serializers
 
 
 def index(request):
+
+    user_agent = parse(request.headers["User-Agent"])
 
     return render(request, 'index.html')
 

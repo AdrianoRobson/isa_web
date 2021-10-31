@@ -23,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-9jh41k1e(+b!ndxw-7ht4i!8id7l-aak$1#&43n8l(oc0-f60%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['isa-adr.herokuapp.com']
-#ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = ['isa-adr.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'consulta_lei'
+    'consulta_lei',
+
+    'django_user_agents',
+
 ]
 
 MIDDLEWARE = [
@@ -50,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'ISA.urls'
@@ -82,6 +87,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 
 
 # Password validation
@@ -127,5 +134,6 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = Path(BASE_DIR, 'staticfiles')  # Raiz dos arquivos staticos. Produção
 
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+USER_AGENTS_CACHE = 'default'

@@ -1,0 +1,46 @@
+
+
+table {
+	  	width: 100%;
+	}
+
+.fundo_sinza{
+    background-color: #f2f2f2
+}
+
+.fundo_red{
+    background-color: #f5f0f0
+}
+
+
+.texto{
+  border-width: 1px;
+  border-style: solid;
+  border-color: #a6a6a6;
+  margin: 3px;
+  padding: 2px;
+  font-size: 18px;
+}
+
+.descricao{
+  border-width: 1px;
+  border-style: solid;
+  border-color: #a6a6a6;
+  margin-right:30px;
+  margin: 3px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.codigo_border p{
+  border-width: 1px;
+  border-style: solid;
+  border-color: #a6a6a6;
+  margin: 3px;
+  padding: 2px;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+

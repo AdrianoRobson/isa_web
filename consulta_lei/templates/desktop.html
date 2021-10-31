@@ -1,0 +1,63 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/desktop_estilo.css' %}">
+
+<p id="info" class="texto fundo_red" hidden></p>
+
+<table id="manual_table">
+  <thead>
+    <tr>
+      <th colspan="2" >Manual</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="descricao">Consultar código</td>
+      <td class="texto">Precione a tecla Esc do teclado</td>
+    </tr>
+    <tr>
+      <td class="descricao">Códigos disponíveis</td>
+      <td class="codigo_border" id="codigos">
+	  </td>
+    </tr>
+    <tr>
+      <td class="descricao">Reproduzir/Avançar a leitura do artigo</td>
+      <td class="texto">Clicar na seta para baixo do teclado</td>
+    </tr>
+  	<tr>
+      <td class="descricao">Pausar/Continuar  a leitura do artigo</td>
+      <td class="texto">Clicar na barra de espaço do teclado</td>
+    </tr>
+  	<tr>
+      <td class="descricao">Retroceder leitura do artigo</td>
+      <td class="texto">Clicar na seta para cima do teclado</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table_ouvindo" id="ouvindo_table" hidden>
+<thead>
+  <tr>
+    <th colspan="2">Ouvindo...</th>
+  </tr>
+</thead>
+    <tbody>
+      <tr>
+        <td class="descricao">Fale</td>
+        <td class="texto">Numero seguido do nome do Artigo</td>
+      </tr>
+      <tr>
+        <td class="descricao">Ex: </td>
+        <td class="codigo_border">
+        <p class="fundo_sinza">121 penal</p>
+        <p>121 código penal</p>
+        <p class="fundo_sinza">Artigo 5º constituição</p>
+        <p>5º constituição</p>
+        <p class="fundo_sinza">1º civil</p>
+        <p>48 processo civil</p>
+        <p class="fundo_sinza">194 consolidacão</p>
+        <p>34 trabalho</p>
+        </td>
+      </tr>
+    </tbody>
+</table>
