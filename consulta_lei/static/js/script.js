@@ -746,8 +746,8 @@ function chamadaAjax(artigo, codigo) {
     $("#info").append('<strong>Aguarde...</strong>')
 
     $.ajax({
-      url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
-      //   url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
+       url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
+       // url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
         data: {
             format: 'json'
         },
