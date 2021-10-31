@@ -131,7 +131,7 @@ function controla_pause_resume() {
 
 function executaLinhaTexto() {
 
-    if ($("#art").is(":hidden")){
+    if ($("#table").is(":hidden")){
         return;
     }
 
@@ -165,7 +165,7 @@ function executaLinhaTexto() {
 
 function executaLinhaTextoBack() {
 
-    if ($("#art").is(":hidden")){
+    if ($("#table").is(":hidden")){
         return;
     }
 
