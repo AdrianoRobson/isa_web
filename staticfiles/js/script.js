@@ -52,6 +52,8 @@ function analiza_fala(str) {
 
     str = str.toLowerCase().replace("artigo", "").replace("numero", "").replace("consultar", "");
 
+
+
     for (var key in dictOrdinais) {
         var value = dictOrdinais[key];
 
@@ -62,8 +64,11 @@ function analiza_fala(str) {
 
     }
 
+
     var num = str.replace(/\D/g, '');
     str = str.replace(num, '');
+    str = str.replace('.', '');
+
     str = str.trim();
     num = num.trim();
 
@@ -128,6 +133,12 @@ function controla_pause_resume() {
     return control;
 }
 
+function formata_leitura(str){
+    str = str.replace(": -", ",");
+    str = str.replace("Pena - ", "Pena, ");
+    return str
+}
+
 
 function executaLinhaTexto() {
 
@@ -152,6 +163,8 @@ function executaLinhaTexto() {
     scroll_down_up(index);
 
     control = 0;
+
+    vet2[index] = formata_leitura(vet2[index])
 
     speech(vet2[index]);
 
@@ -186,6 +199,8 @@ function executaLinhaTextoBack() {
     scroll_down_up(index);
 
     control = 0;
+
+    vet2[index] = formata_leitura(vet2[index])
 
     speech(vet2[index]);
 
@@ -405,7 +420,7 @@ function speech() {
         synth.speak(utterance);
 
     } else {
-        //alert('cuxxxxx')
+
     }
 
 
@@ -706,6 +721,8 @@ function mostra_inicio(msg_user = '') {
     //window.location.reload();
 
      $("table").hide();
+     $("#ouvindo_table").hide();
+
      $("#manual_table").show();
 
      if (msg_user != ''){
@@ -727,7 +744,7 @@ function chamadaAjax(artigo, codigo) {
 
     $.ajax({
        url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
-         //url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
+       // url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
         data: {
             format: 'json'
         },
@@ -741,6 +758,14 @@ function chamadaAjax(artigo, codigo) {
         success: function(data) {
 
             if (data.length > 0) {
+
+                $("#ouvindo_table").hide()
+
+                $("#info").show()
+                $("#info").append('<strong>Aguarde...</strong>')
+
+
+
 
                 vet_artInaterado = data[0].fields.artigoInalterado.split(/\n/);
                 vet_artigoTexto = data[0].fields.artigoTexto.split(/\n/);
@@ -814,6 +839,9 @@ function chamadaAjax(artigo, codigo) {
                 art.innerText = capitalize(str_falar_artigo);
 
                 speech2(str_falar_artigo);
+
+                $("#info").empty()
+                $("#info").hide()
 
             } else {
 
