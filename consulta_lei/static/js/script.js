@@ -742,8 +742,6 @@ function chamadaAjax(artigo, codigo) {
     vet2 = []
     vet = []
 
-    $("#ouvindo_table").hide()
-
     $("#info").show()
     $("#info").append('<strong>Aguarde...</strong>')
 
