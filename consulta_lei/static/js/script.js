@@ -576,6 +576,10 @@ function speech2(msg) {
 
 function autoExecutaLinha() {
 
+    if ($("#art").is(":hidden")){
+        return;
+    }
+
     if (vet.length == 0)
         return;
 
