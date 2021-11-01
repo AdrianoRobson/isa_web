@@ -841,6 +841,9 @@ function chamadaAjax(artigo, codigo) {
 
             } else {
 
+                ("#info").empty()
+                $("#info").hide()
+
                 mostra_inicio("Não existe o artigo " + artigo + ' em ' + dictCodigo[codigo] + '\n')
 
                 speech2('Não existe o artigo ' + artigo + ' em ' + dictCodigo[codigo])
