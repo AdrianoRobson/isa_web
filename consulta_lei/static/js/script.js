@@ -869,9 +869,10 @@ function getLocalStream() {
          $("#info").empty()
          $("#info").append(
                'Você não permitiu o uso do microfone! <br>'+
+               'Essa aplicação funciona 100% através de comando por voz! <br>'+
                'É necessário permitir o uso do microfone para consultar os artigos via comando de voz!<br>'+
                'Toque no cadeado localizado no canto superior esquerdo da barra de enderço do site https://isa-adr.herokuapp.com/'+
-               'no browser e conceda a permissão para utilizar o microfone. Atualize a página após dar permissão!')
+               ' no browser e conceda a permissão para utilizar o microfone. Atualize a página após dar permissão!')
 
       }
       result.onchange = function() {
