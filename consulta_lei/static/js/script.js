@@ -318,7 +318,7 @@ function touchStartHandler(event) {
 
             // te
 
-            //getLocalStream()
+            getLocalStream()
 
             iniciaTimer(1);
 
@@ -680,7 +680,7 @@ window.onload = function() {
 
     mostra_codigo()
 
-   //getLocalStream()
+   getLocalStream()
 };
 
 
@@ -749,7 +749,7 @@ function chamadaAjax(artigo, codigo) {
 
     $.ajax({
       url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
-       //  url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
+       // url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
         data: {
             format: 'json'
         },
@@ -858,33 +858,28 @@ function chamadaAjax(artigo, codigo) {
 
 function getLocalStream() {
 
+    navigator.permissions.query({name:'microphone'}).then(function(result) {
+      if (result.state == 'granted') {
 
+      } else if (result.state == 'prompt') {
 
-        navigator.mediaDevices.getUserMedia({video: false, audio: true}).then( stream => {
-        window.localStream = stream; // A
-        window.localAudio.srcObject = stream; // B
-        window.localAudio.autoplay = true; // C
+      } else if (result.state == 'denied') {
 
-    }).catch( err => {
-
-        console.log("u got an error:" + err)
-
-
-        if(err.toString().includes("denied")){
-
-
-
-            $("#info").show()
-            $("#info").empty()
-            $("#info").append(
+         $("#info").show()
+         $("#info").empty()
+         $("#info").append(
                'Você não permitiu o uso do microfone! <br>'+
                'É necessário permitir o uso do microfone para consultar os artigos via comando de voz!<br>'+
                'Toque no cadeado localizado no canto superior esquerdo da barra de enderço do site https://isa-adr.herokuapp.com/'+
-               'no browser e conceda a permissão para utilizar o microfone e atualize a página!')
+               'no browser e conceda a permissão para utilizar o microfone. Atualize a página após dar permissão!')
 
+      }
+      result.onchange = function() {
 
-        }
+      };
     });
+
+
 
 }
 
