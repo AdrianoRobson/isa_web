@@ -318,7 +318,7 @@ function touchStartHandler(event) {
 
             // te
 
-            getLocalStream()
+            //getLocalStream()
 
             iniciaTimer(1);
 
@@ -680,7 +680,7 @@ window.onload = function() {
 
     mostra_codigo()
 
-   getLocalStream()
+   //getLocalStream()
 };
 
 
