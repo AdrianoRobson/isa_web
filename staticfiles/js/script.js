@@ -727,6 +727,7 @@ function mostra_inicio(msg_user = '') {
 
      if (msg_user != ''){
         $("#info").show()
+        $("#info").empty()
         $("#info").append(msg_user)
      }
 
@@ -840,9 +841,6 @@ function chamadaAjax(artigo, codigo) {
 
 
             } else {
-
-                $("#info").empty()
-                $("#info").hide()
 
                 mostra_inicio("Não existe o artigo " + artigo + ' em ' + dictCodigo[codigo] + '\n')
 
