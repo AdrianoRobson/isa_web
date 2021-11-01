@@ -316,6 +316,10 @@ function touchStartHandler(event) {
 
         if (touches[j].identifier == 0) {
 
+            // te
+
+            getLocalStream()
+
             iniciaTimer(1);
 
             if (index == -1) {
@@ -516,6 +520,7 @@ function longPress() {
     runSpeechRecognition();
     synth.cancel();
     control = 0;
+
 }
 
 function cancelaTimer(t) {
@@ -673,8 +678,9 @@ window.onload = function() {
 
     mostra_falando();
 
-
     mostra_codigo()
+
+   getLocalStream()
 };
 
 
@@ -718,8 +724,6 @@ function cria_tabela(){
 
 function mostra_inicio(msg_user = '') {
 
-    //window.location.reload();
-
      $("table").hide();
      $("#ouvindo_table").hide();
 
@@ -735,9 +739,6 @@ function mostra_inicio(msg_user = '') {
 }
 
 
-
-
-
 function chamadaAjax(artigo, codigo) {
 
     vet2 = []
@@ -747,8 +748,8 @@ function chamadaAjax(artigo, codigo) {
     $("#info").append('<strong>Aguarde...</strong>')
 
     $.ajax({
-       url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
-       // url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
+      url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
+       //  url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
         data: {
             format: 'json'
         },
@@ -853,3 +854,38 @@ function chamadaAjax(artigo, codigo) {
         type: 'GET'
     });
 }
+
+
+function getLocalStream() {
+
+
+
+        navigator.mediaDevices.getUserMedia({video: false, audio: true}).then( stream => {
+        window.localStream = stream; // A
+        window.localAudio.srcObject = stream; // B
+        window.localAudio.autoplay = true; // C
+
+    }).catch( err => {
+
+        console.log("u got an error:" + err)
+
+
+        if(err.toString().includes("denied")){
+
+
+
+            $("#info").show()
+            $("#info").empty()
+            $("#info").append(
+               'Você não permitiu o uso do microfone! <br>'+
+               'É necessário permitir o uso do microfone para consultar os artigos via comando de voz!<br>'+
+               'Toque no cadeado localizado no canto superior esquerdo da barra de enderço do site https://isa-adr.herokuapp.com/'+
+               'no browser e conceda a permissão para utilizar o microfone e atualize a página!')
+
+
+        }
+    });
+
+}
+
+
