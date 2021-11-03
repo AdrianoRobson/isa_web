@@ -2,7 +2,7 @@
 ISA WEB 
 Aplicação web desenvolvida em python + Django. Ferramenta de consulta de artigos da lei que utiliza recursos da API de interface speechRecognation
 
-Com o recurso SpeechToText, é possível ouvir a leitura em voz sintetiza. Claro que isso não é uma novidade, no entanto, para o contexto jurídico há muitos jargões específicos dessa área que se tornam estranhos ao serem reproduzidos diretamente da fonte crua de conteúdo sem um tratamento correto do contexto para ser reproduzido.
+Com o recurso SpeechToText, é possível ouvir a leitura em voz sintetiza. Claro que isso não é uma novidade, no entanto, para o contexto jurídico há muitos jargões específicos dessa área que se tornam estranhos ao serem reproduzidos diretamente da fonte crua do conteúdo sem um tratamento correto do contexto para ser reproduzido pelos sintetizadores de voz.
 
 Aplicação disponível em https://isa-adr.herokuapp.com/
 
