@@ -10,7 +10,7 @@ Compatibilidade com navegadores: (Chrome, Edge)
 ![1](https://user-images.githubusercontent.com/40671414/139675982-a07b0a42-88de-4353-a8e6-c6cd8e86c12e.gif)![2](https://user-images.githubusercontent.com/40671414/139675994-01c103ec-d014-40d6-8a29-6756e7bf6821.png)
 
 
-Os links abaixos são scraped das seguintes urls 
+Os conteúdos do app sáo scraped das seguintes urls 
 
 http://www.planalto.gov.br/ccivil_03/decreto-lei/Del2848compilado.htm // código penal 
 
