@@ -94,9 +94,9 @@ function esconde_tabela() {
         return;
 
     $("table").hide();
+    //table.style.display = "none";
 
-    $("#art").hide();
-
+    art.style.display = 'none';
     mostra_falando();
 }
 
@@ -110,7 +110,9 @@ function mostra_tabela() {
 
     $("table").show();
 
-    $("#art").show();
+    //table.style.display = "block";
+
+    art.style.display = 'block';
 }
 
 theElement.addEventListener("mouseup", tapOrClick, false);
@@ -722,60 +724,40 @@ function cria_tabela(){
 
 function mostra_inicio(msg_user = '') {
 
-
+     $("table").hide();
      $("#ouvindo_table").hide();
 
-    if( msg_user.trim().length != 0 ){
+     $("#manual_table").show();
 
-        vet2 = []
-        vet = []
-
-        $("table").hide();
-        $("#art").hide();
-
-        $("#manual_table").show();
-
+     if (msg_user != ''){
         $("#info").show()
         $("#info").empty()
         $("#info").append(msg_user)
-    }
-    else if (vet2.length > 0){
+     }
 
-        $("#table").show();
-        $("#art").show();
 
-    }else{
-
-        $("#manual_table").show();
-
-    }
 }
 
 
 function chamadaAjax(artigo, codigo) {
 
-    if(artigo.trim() == 0 || codigo.trim()==0){
-
-         mostra_inicio("Você não disse o número do código, "+ dictCodigo[codigo] + '\n')
-
-         speech2("Você não disse o número do código, "+ dictCodigo[codigo])
-
-         return;
-
-    }
+    vet2 = []
+    vet = []
 
     $("#info").show()
     $("#info").append('<strong>Aguarde...</strong>')
 
     $.ajax({
       url: 'https://isa-adr.herokuapp.com/isa/'+artigo+'/'+codigo,
-      //url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
+       // url: 'http://127.0.0.1:8000/isa/' + artigo + '/' + codigo,
         data: {
             format: 'json'
         },
         error: function(jqxhr, settings, thrownError) {
             console.log('Houve um erro! ' + thrownError);
+
             mostra_inicio(transcript + ', não foi possível encontrar!')
+
         },
         dataType: 'json',
         success: function(data) {
@@ -806,6 +788,10 @@ function chamadaAjax(artigo, codigo) {
                     str_falar_artigo += ' ' + dictCodigo[codigo];
                 }
 
+
+
+                //$('#ouvindo_table').hide();
+                //$("#manual_table").hide();
 
                 mostra_tabela();
                 esconde_falando();
